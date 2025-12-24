@@ -1,0 +1,7 @@
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
+import { currentUser } from "./auth";
+
+export default function App() {
+  return currentUser() ? <Dashboard /> : <Login />;
+}
