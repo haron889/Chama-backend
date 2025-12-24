@@ -1,0 +1,41 @@
+import { db, save } from "../data";
+import { currentUser } from "../auth";
+import Chama from "./Chama";
+import { useState } from "react";
+
+export default function Dashboard() {
+  const user = currentUser();
+  const [name, setName] = useState("");
+  const [selected, setSelected] = useState(null);
+
+  function createChama() {
+    db.chamas.push({
+      id: Date.now(),
+      name,
+      members: [{ userId: user.id, role: "admin" }]
+    });
+    save();
+    setName("");
+  }
+
+  return selected ? (
+    <Chama chama={selected} />
+  ) : (
+    <div style={{ padding: 20 }}>
+      <h3>Your Chamas</h3>
+
+      {db.chamas.map(c => (
+        <div key={c.id} onClick={() => setSelected(c)}>
+          {c.name}
+        </div>
+      ))}
+
+      <input
+        placeholder="New Chama Name"
+        value={name}
+        onChange={e => setName(e.target.value)}
+      />
+      <button onClick={createChama}>Create Chama</button>
+    </div>
+  );
+}
