@@ -1,0 +1,43 @@
+import { db, save } from "../data";
+import { currentUser } from "../auth";
+
+export default function Loans({ chama }) {
+  const user = currentUser();
+
+  function applyLoan() {
+    db.loans.push({
+      id: Date.now(),
+      chamaId: chama.id,
+      userId: user.id,
+      amount: 5000,
+      balance: 5000,
+      status: "Pending"
+    });
+    save();
+    alert("Loan Applied");
+  }
+
+  function approve(id) {
+    const loan = db.loans.find(l => l.id === id);
+    loan.status = "Approved";
+    save();
+  }
+
+  return (
+    <div>
+      <h4>Loans</h4>
+      <button onClick={applyLoan}>Apply Loan</button>
+
+      {db.loans
+        .filter(l => l.chamaId === chama.id)
+        .map(l => (
+          <div key={l.id}>
+            KES {l.amount} - {l.status}
+            {l.status === "Pending" && (
+              <button onClick={() => approve(l.id)}>Approve</button>
+            )}
+          </div>
+        ))}
+    </div>
+  );
+}
