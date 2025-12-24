@@ -1,0 +1,28 @@
+import { db, save } from "../data";
+import { currentUser } from "../auth";
+import Loans from "./Loans";
+
+export default function Chama({ chama }) {
+  const user = currentUser();
+
+  function contribute() {
+    db.contributions.push({
+      id: Date.now(),
+      chamaId: chama.id,
+      userId: user.id,
+      amount: 500
+    });
+    save();
+    alert("Contribution recorded");
+  }
+
+  return (
+    <div style={{ padding: 20 }}>
+      <h3>{chama.name}</h3>
+
+      <button onClick={contribute}>Contribute KES 500</button>
+
+      <Loans chama={chama} />
+    </div>
+  );
+}
