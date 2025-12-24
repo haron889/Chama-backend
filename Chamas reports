@@ -1,0 +1,11 @@
+import { db } from "../data";
+
+export default function Reports() {
+  return (
+    <div>
+      <h3>Reports</h3>
+      <p>Total Contributions: {db.contributions.length}</p>
+      <p>Total Loans: {db.loans.length}</p>
+    </div>
+  );
+}
