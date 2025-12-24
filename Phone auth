@@ -1,0 +1,16 @@
+import { db, save } from "./data";
+
+export function login(phone) {
+  let user = db.users.find(u => u.phone === phone);
+  if (!user) {
+    user = { id: Date.now(), phone };
+    db.users.push(user);
+    save();
+  }
+  localStorage.setItem("user", JSON.stringify(user));
+  return user;
+}
+
+export function currentUser() {
+  return JSON.parse(localStorage.getItem("user"));
+}
