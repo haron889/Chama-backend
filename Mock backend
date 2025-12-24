@@ -1,0 +1,13 @@
+export const db = {
+  users: JSON.parse(localStorage.getItem("users")) || [],
+  chamas: JSON.parse(localStorage.getItem("chamas")) || [],
+  contributions: JSON.parse(localStorage.getItem("contributions")) || [],
+  loans: JSON.parse(localStorage.getItem("loans")) || []
+};
+
+export function save() {
+  localStorage.setItem("users", JSON.stringify(db.users));
+  localStorage.setItem("chamas", JSON.stringify(db.chamas));
+  localStorage.setItem("contributions", JSON.stringify(db.contributions));
+  localStorage.setItem("loans", JSON.stringify(db.loans));
+}db.loans
